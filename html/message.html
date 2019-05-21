@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>message</title>
+    <link rel="stylesheet" href="../mod/layui/css/layui.css">
+    <script src="../mod/layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" required  lay-verify="required" placeholder="请输入您的姓名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">留言加密</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value=""></option>
+                <option value="0">show就完事了</option>
+                <option value="1">浏览器下方显示但匿名</option>
+                <option value="2">仅提交不显示</option>
+                <option value="3">仅提交不显示还匿名</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份选择</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like[tourist]" title="游客">
+            <input type="checkbox" name="like[HR]" title="HR" checked>
+            <input type="checkbox" name="like[BOSS]" title="某老总">
+        </div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">匿名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="checkbox" name="switch" lay-skin="switch">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="先生" title="先生" checked>
+            <input type="radio" name="sex" value="女士" title="女士">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">感觉怎样</label>
+        <div class="layui-input-block">
+            <div id="score"></div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">说点什么</label>
+        <div class="layui-input-block">
+            <textarea name="desc" placeholder="说点什么⑧......" class="layui-textarea" lay-verify="required"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //星级评分
+    layui.use('rate', function(){
+        var rate = layui.rate;
+        //渲染
+        var ins1 = rate.render({
+            elem: '#score'  //绑定元素
+            ,setText: function(value){
+                var arrs = {
+                    '1': '不好意思'
+                    ,'2': '能给我一点关于这个网站建议吗'
+                    ,'3': '噢，还行'
+                    ,'4': '十分感谢'
+                    ,'5': '很高兴认识你，如有需要请联系'
+                };
+                if(arrs[value] == null){
+                    layer.msg("欢迎留言")
+                }else {
+                    layer.msg(arrs[value] || ( value ));
+                }
+            }
+        });
+
+    });
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
